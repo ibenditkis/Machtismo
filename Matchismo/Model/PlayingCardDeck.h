@@ -1,15 +1,18 @@
 //
-//  ViewController.h
+//  PlayingCardDeck.h
 //  Matchismo
 //
 //  Created by Ilia Benditkis on 07/09/2020.
 //  Copyright © 2020 Ilia Benditkis. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "Deck.h"
 
-@interface ViewController : UIViewController
 
+NS_ASSUME_NONNULL_BEGIN
+
+@interface PlayingCardDeck : Deck
 
 @end
 
+NS_ASSUME_NONNULL_END
