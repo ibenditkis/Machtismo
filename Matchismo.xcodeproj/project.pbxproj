@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		40161E83250773B5006394D6 /* CardMatchingGame.m in Sources */ = {isa = PBXBuildFile; fileRef = 40161E82250773B5006394D6 /* CardMatchingGame.m */; };
 		407A7A4225065475003D1B78 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 407A7A4125065475003D1B78 /* AppDelegate.m */; };
 		407A7A4525065475003D1B78 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 407A7A4425065475003D1B78 /* SceneDelegate.m */; };
 		407A7A4B25065475003D1B78 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 407A7A4925065475003D1B78 /* Main.storyboard */; };
@@ -21,6 +22,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		40161E81250773B5006394D6 /* CardMatchingGame.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardMatchingGame.h; sourceTree = "<group>"; };
+		40161E82250773B5006394D6 /* CardMatchingGame.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CardMatchingGame.m; sourceTree = "<group>"; };
 		407A7A3D25065475003D1B78 /* Matchismo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Matchismo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		407A7A4025065475003D1B78 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		407A7A4125065475003D1B78 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -65,6 +68,8 @@
 				408473BF250683ED002EBE84 /* Deck.h */,
 				408473C0250683ED002EBE84 /* Deck.m */,
 				407A7A5C25066BC3003D1B78 /* Card.m */,
+				40161E81250773B5006394D6 /* CardMatchingGame.h */,
+				40161E82250773B5006394D6 /* CardMatchingGame.m */,
 				407A7A3F25065475003D1B78 /* Matchismo */,
 				407A7A3E25065475003D1B78 /* Products */,
 			);
@@ -169,6 +174,7 @@
 				407A7A5D25066BC3003D1B78 /* Card.m in Sources */,
 				408473C725068C5E002EBE84 /* PlayingCardDeck.m in Sources */,
 				407A7A4225065475003D1B78 /* AppDelegate.m in Sources */,
+				40161E83250773B5006394D6 /* CardMatchingGame.m in Sources */,
 				408473C425068803002EBE84 /* PlayingCard.m in Sources */,
 				408473BE25068009002EBE84 /* CardGameViewController.m in Sources */,
 				407A7A5325065476003D1B78 /* main.m in Sources */,
