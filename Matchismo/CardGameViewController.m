@@ -38,12 +38,10 @@
         [sender setBackgroundImage:[UIImage imageNamed:@"cardfront"]
                           forState:UIControlStateNormal];
         [sender setTitle:card.contents forState:UIControlStateNormal];
+        self.flipCount++;
     } else {
-        [sender setBackgroundImage:[UIImage imageNamed:@"cardback"]
-                          forState:UIControlStateNormal];
-        [sender setTitle:@"" forState:UIControlStateNormal];
+        sender.hidden = true;
     }
-    self.flipCount++;
 }
 
 @end
