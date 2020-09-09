@@ -15,16 +15,24 @@
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
 @property (strong, nonatomic) CardMatchingGame *game;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
+@property (weak, nonatomic) IBOutlet UISwitch *modeSwitch;
+@property (weak, nonatomic) IBOutlet UILabel *messageLabel;
 
 @end
 
 @implementation CardGameViewController
 
 - (CardMatchingGame *)game {
-    if (!_game) _game = [[CardMatchingGame alloc]
-                         initWithCardCount:[self.cardButtons count]
-                         usingDeck:[[PlayingCardDeck alloc] init]];
+    if (!_game) _game = [self createGame];
     return _game;
+}
+
+- (CardMatchingGame *)createGame {
+    CardMatchingGame *game = [[CardMatchingGame alloc]
+            initWithCardCount:[self.cardButtons count]
+            usingDeck:[[PlayingCardDeck alloc] init]];
+    game.matchAmmount = self.modeSwitch.isOn ? 3 : 2;
+    return game;
 }
 
 - (IBAction)touchCardButton:(UIButton *)sender {
@@ -44,6 +52,8 @@
         cardButton.enabled = !card.matched;
     }
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %ld", (long)self.game.score];
+    self.modeSwitch.enabled = self.game.stepCount == 0;
+    self.messageLabel.text = self.game.message.length ? self.game.message : @"Game started";
 }
 
 - (NSString *)titleForCard:(Card *)card {
@@ -52,6 +62,15 @@
 
 - (UIImage *)backgroundImgaeForCard:(Card *) card {
     return [UIImage imageNamed:card.chosen ? @"cardfront" : @"cardback"];
+}
+
+- (IBAction)touchDealButton:(UIButton *)sender {
+    self.game = [self createGame];
+    [self updateUI];
+}
+
+- (IBAction)touchModeSwitch:(UISwitch *)sender {
+    self.game.matchAmmount = sender.isOn ? 3 : 2;
 }
 
 @end

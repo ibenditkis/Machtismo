@@ -20,6 +20,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (Card *)cardAtIndex:(NSUInteger)index;
 
 @property (nonatomic, readonly) NSInteger score;
+@property (nonatomic) NSUInteger matchAmmount;
+@property (nonatomic, readonly) NSUInteger stepCount;
+@property (nonatomic, strong) NSString *message;
 
 @end
 
