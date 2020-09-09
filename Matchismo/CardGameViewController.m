@@ -15,8 +15,8 @@
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
 @property (strong, nonatomic) CardMatchingGame *game;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
-@property (weak, nonatomic) IBOutlet UISwitch *modeSwitch;
 @property (weak, nonatomic) IBOutlet UILabel *messageLabel;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *modeSelect;
 
 @end
 
@@ -31,7 +31,7 @@
     CardMatchingGame *game = [[CardMatchingGame alloc]
             initWithCardCount:[self.cardButtons count]
             usingDeck:[[PlayingCardDeck alloc] init]];
-    game.matchAmmount = self.modeSwitch.isOn ? 3 : 2;
+    game.matchAmmount = [self matchAmountFromSelect: self.modeSelect];
     return game;
 }
 
@@ -52,7 +52,7 @@
         cardButton.enabled = !card.matched;
     }
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %ld", (long)self.game.score];
-    self.modeSwitch.enabled = self.game.stepCount == 0;
+    self.modeSelect.enabled = self.game.stepCount == 0;
     self.messageLabel.text = self.game.message.length ? self.game.message : @"Game started";
 }
 
@@ -69,8 +69,12 @@
     [self updateUI];
 }
 
-- (IBAction)touchModeSwitch:(UISwitch *)sender {
-    self.game.matchAmmount = sender.isOn ? 3 : 2;
+- (NSUInteger) matchAmountFromSelect:(UISegmentedControl *)select {
+    return self.modeSelect.selectedSegmentIndex == 1 ? 3 : 2;
+}
+
+- (IBAction)touchModeSelect:(UISegmentedControl *)sender {
+    self.game.matchAmmount = [self matchAmountFromSelect: sender];
 }
 
 @end
