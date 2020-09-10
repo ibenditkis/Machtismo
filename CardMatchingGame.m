@@ -21,6 +21,11 @@
     return _cards;
 }
 
+- (NSMutableArray *)messages {
+    if (!_messages) _messages = [[NSMutableArray alloc] init];
+    return _messages;
+}
+
 - (void)setMatchAmmount:(NSUInteger)matchAmmount {
     if (matchAmmount >= 2 && matchAmmount <= 3) {
         _matchAmmount = matchAmmount;
@@ -31,6 +36,7 @@
     self = [super init];
     if (self) {
         self.matchAmmount = 3;
+        [self.messages addObject:@"Game started"];
         for (int i = 0; i < count; i++) {
             Card *card = [deck drawRandomCard];
             if (card) {
@@ -60,18 +66,19 @@ NSString *formatCards(NSArray *cards) {
     Card *card = [self cardAtIndex:index];
     
     if (!card.matched) {
+        NSMutableArray *otherCards = [[NSMutableArray alloc] init];
+        
+        for (Card* otherCard in self.cards) {
+            if (otherCard != card && otherCard.chosen && !otherCard.matched) {
+                [otherCards addObject:otherCard];
+            }
+        }
+
+        NSString* message = formatCards(otherCards);
         if (card.chosen) {
             card.chosen = NO;
             NSLog(@"close %@", card.contents);
-            self.message = @"";
         } else {
-            NSMutableArray *otherCards = [[NSMutableArray alloc] init];
-            
-            for (Card* otherCard in self.cards) {
-                if (otherCard.chosen && !otherCard.matched) {
-                    [otherCards addObject:otherCard];
-                }
-            }
             NSString *cardNames = formatCards([otherCards arrayByAddingObject:card]);
             
             if ([otherCards count] >= self.matchAmmount - 1) {
@@ -81,24 +88,24 @@ NSString *formatCards(NSArray *cards) {
                     scoreGain = matchScore * MATCH_BONUS;
                     for (Card *otherCard in otherCards) otherCard.matched = YES;
                     card.matched = YES;
-                    self.message = [NSString stringWithFormat: @"Matched %@ for %d point%@",
-                                    cardNames, scoreGain, scoreGain > 1 ? @"s" : @""];
+                    message = [NSString stringWithFormat: @"Matched %@ for %d point%@",
+                               cardNames, scoreGain, scoreGain > 1 ? @"s" : @""];
                 } else {
                     scoreGain = -MISMATCH_PENALTY;
                     for (Card *otherCard in otherCards) otherCard.chosen = NO;
-                    self.message = [NSString stringWithFormat: @"%@ don't match! %d point penalty!",
-                                    cardNames, -scoreGain];
+                    message = [NSString stringWithFormat: @"%@ don't match! %d point penalty!",
+                               cardNames, -scoreGain];
                 }
                 self.score += scoreGain;
                 NSLog(@"match %@ with %@ matchScore=%d", card.contents, formatCards(otherCards), matchScore);
             } else {
-                self.message = cardNames;
+                message = cardNames;
                 NSLog(@"open %@", card.contents);
             }
             card.chosen = YES;
             self.score -= COST_TO_CHOOSE;
         }
-        self.stepCount++;
+        [self.messages addObject:message];
     }
 }
 

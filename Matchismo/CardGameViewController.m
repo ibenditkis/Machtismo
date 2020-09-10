@@ -12,11 +12,12 @@
 
 @interface CardGameViewController ()
 
-@property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
 @property (strong, nonatomic) CardMatchingGame *game;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (weak, nonatomic) IBOutlet UILabel *messageLabel;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *modeSelect;
+@property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
+@property (weak, nonatomic) IBOutlet UISlider *historySlider;
 
 @end
 
@@ -52,8 +53,10 @@
         cardButton.enabled = !card.matched;
     }
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %ld", (long)self.game.score];
-    self.modeSelect.enabled = self.game.stepCount == 0;
-    self.messageLabel.text = self.game.message.length ? self.game.message : @"Game started";
+    self.modeSelect.enabled = self.game.messages.count == 0;
+    self.messageLabel.text = [self.game.messages lastObject];
+    self.messageLabel.alpha = 1.0;
+    self.historySlider.value = self.historySlider.maximumValue = self.game.messages.count - 1;
 }
 
 - (NSString *)titleForCard:(Card *)card {
@@ -75,6 +78,17 @@
 
 - (IBAction)touchModeSelect:(UISegmentedControl *)sender {
     self.game.matchAmmount = [self matchAmountFromSelect: sender];
+}
+
+- (IBAction)changeHistorySlider:(UISlider *)sender {
+    long sliderValue = lroundf(sender.value);
+    self.messageLabel.text = self.game.messages[sliderValue];
+    self.messageLabel.alpha = sliderValue < self.game.messages.count - 1 ? 0.5 : 1.0;
+}
+
+- (IBAction)touchHistorySlider:(UISlider *)sender {
+    long sliderValue = lroundf(sender.value);
+    [sender setValue:sliderValue animated:YES];
 }
 
 @end

@@ -15,6 +15,57 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Score: 0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d2D-iR-4hq">
+                                <rect key="frame" x="67" y="111" width="145" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="TopLeft" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="02v-9h-AR1">
+                                <rect key="frame" x="127" y="524" width="160" height="48"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <viewLayoutGuide key="safeArea" id="eAh-MB-HBA"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Deal">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="8"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="touchDealButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="86p-AU-z9n"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Game started" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TbE-W7-HRa">
+                                <rect key="frame" x="20" y="74" width="374" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Match mode" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BXf-i8-KKC">
+                                <rect key="frame" x="57" y="581" width="130" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="a56-Wt-zup">
+                                <rect key="frame" x="227" y="580" width="131" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <segments>
+                                    <segment title="2"/>
+                                    <segment title="3"/>
+                                </segments>
+                                <connections>
+                                    <action selector="touchModeSelect:" destination="BYZ-38-t0r" eventType="valueChanged" id="Ep5-f9-BNc"/>
+                                </connections>
+                            </segmentedControl>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n8I-jm-J3m">
                                 <rect key="frame" x="67" y="148" width="40" height="60"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -37,20 +88,6 @@
                                     <action selector="touchCardButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="liy-YR-Hs6"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Score: 0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d2D-iR-4hq">
-                                <rect key="frame" x="67" y="111" width="145" height="29"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Game started" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TbE-W7-HRa">
-                                <rect key="frame" x="20" y="74" width="374" height="22"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jPG-sb-Kwx">
                                 <rect key="frame" x="163" y="148" width="40" height="60"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -359,84 +396,53 @@
                                     <action selector="touchCardButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="w8S-7K-P5X"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="TopLeft" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="02v-9h-AR1">
-                                <rect key="frame" x="127" y="524" width="160" height="48"/>
+                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="GgP-vR-OfS">
+                                <rect key="frame" x="55" y="646" width="305" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <viewLayoutGuide key="safeArea" id="eAh-MB-HBA"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <state key="normal" title="Deal">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="8"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <action selector="touchDealButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="86p-AU-z9n"/>
+                                    <action selector="changeHistorySlider:" destination="BYZ-38-t0r" eventType="valueChanged" id="Vpk-ih-sRD"/>
+                                    <action selector="touchHistorySlider:" destination="BYZ-38-t0r" eventType="touchUpInside" id="a5W-OU-Ckf"/>
                                 </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Match mode" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BXf-i8-KKC">
-                                <rect key="frame" x="57" y="581" width="130" height="29"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="a56-Wt-zup">
-                                <rect key="frame" x="227" y="580" width="131" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <segments>
-                                    <segment title="2"/>
-                                    <segment title="3"/>
-                                </segments>
-                                <connections>
-                                    <action selector="touchModeSelect:" destination="BYZ-38-t0r" eventType="valueChanged" id="Ep5-f9-BNc"/>
-                                </connections>
-                            </segmentedControl>
+                            </slider>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.56284224989999998" blue="0.31881666180000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="historySlider" destination="GgP-vR-OfS" id="In0-Wn-gtC"/>
                         <outlet property="messageLabel" destination="TbE-W7-HRa" id="QYx-CA-uAh"/>
                         <outlet property="modeSelect" destination="a56-Wt-zup" id="Gdv-79-TtE"/>
                         <outlet property="scoreLabel" destination="d2D-iR-4hq" id="CZ9-7g-2p2"/>
-                        <outletCollection property="cardButtons" destination="n8I-jm-J3m" id="orK-mD-AHm"/>
-                        <outletCollection property="cardButtons" destination="j45-3f-Ou1" id="Raj-s6-OVq"/>
-                        <outletCollection property="cardButtons" destination="jPG-sb-Kwx" id="Ctl-Do-uN6"/>
-                        <outletCollection property="cardButtons" destination="jPG-sb-Kwx" id="fVi-O2-3X9"/>
-                        <outletCollection property="cardButtons" destination="n8I-jm-J3m" id="wll-Jm-DT7"/>
-                        <outletCollection property="cardButtons" destination="j45-3f-Ou1" id="79y-yH-Zl6"/>
-                        <outletCollection property="cardButtons" destination="I0Y-HW-VeC" id="73K-i7-xUr"/>
-                        <outletCollection property="cardButtons" destination="vy2-Zt-pFd" id="M0Y-ND-vzt"/>
-                        <outletCollection property="cardButtons" destination="dY8-Qd-Ueo" id="EhK-nS-bMz"/>
-                        <outletCollection property="cardButtons" destination="a3t-Uz-agA" id="dea-Ri-Vcz"/>
-                        <outletCollection property="cardButtons" destination="IeK-50-U1C" id="6LA-M7-O1V"/>
-                        <outletCollection property="cardButtons" destination="dWQ-Dh-Bdv" id="1S5-no-d21"/>
-                        <outletCollection property="cardButtons" destination="Wnz-l4-2hD" id="DOn-VT-Qkl"/>
-                        <outletCollection property="cardButtons" destination="Sic-Jc-Q4V" id="jeJ-T3-xgC"/>
-                        <outletCollection property="cardButtons" destination="1ya-0z-FDe" id="HgB-sH-dpG"/>
-                        <outletCollection property="cardButtons" destination="faP-p9-2Uj" id="1s4-fG-QzI"/>
-                        <outletCollection property="cardButtons" destination="eVX-sg-6Hx" id="bYd-JS-HN4"/>
-                        <outletCollection property="cardButtons" destination="REv-KW-bop" id="dkQ-ch-PCL"/>
-                        <outletCollection property="cardButtons" destination="uqs-xQ-NHk" id="G6x-2P-9Db"/>
-                        <outletCollection property="cardButtons" destination="XAb-c0-Ash" id="WSC-Qp-1Ne"/>
-                        <outletCollection property="cardButtons" destination="qnF-4J-xM6" id="4iy-qX-DSd"/>
-                        <outletCollection property="cardButtons" destination="aIS-cr-7GQ" id="ElZ-Uw-mbh"/>
-                        <outletCollection property="cardButtons" destination="84X-4D-pA3" id="NjM-5p-lAf"/>
-                        <outletCollection property="cardButtons" destination="4Ei-iN-82h" id="LBi-rc-ref"/>
-                        <outletCollection property="cardButtons" destination="hW9-2r-GLg" id="QJO-wh-gpm"/>
-                        <outletCollection property="cardButtons" destination="Waz-kH-0Nx" id="ExF-73-8Nr"/>
-                        <outletCollection property="cardButtons" destination="xis-EA-MnB" id="v26-EB-64M"/>
-                        <outletCollection property="cardButtons" destination="Dlp-Ls-1bL" id="dhn-9J-97R"/>
-                        <outletCollection property="cardButtons" destination="skD-jz-Hgg" id="7Tq-ka-BWX"/>
-                        <outletCollection property="cardButtons" destination="hm9-bi-gNM" id="uoe-iY-Hfb"/>
-                        <outletCollection property="cardButtons" destination="g07-6U-YUO" id="hB0-mn-q8M"/>
-                        <outletCollection property="cardButtons" destination="q43-Mk-TY9" id="OTq-Eq-tyP"/>
-                        <outletCollection property="cardButtons" destination="ynL-rK-oy0" id="P4q-Qf-rOL"/>
+                        <outletCollection property="cardButtons" destination="n8I-jm-J3m" id="Kmk-5D-xC3"/>
+                        <outletCollection property="cardButtons" destination="jPG-sb-Kwx" id="6sd-Kn-f44"/>
+                        <outletCollection property="cardButtons" destination="j45-3f-Ou1" id="x7b-xU-5bn"/>
+                        <outletCollection property="cardButtons" destination="I0Y-HW-VeC" id="lKB-Q8-HjW"/>
+                        <outletCollection property="cardButtons" destination="vy2-Zt-pFd" id="URn-Kj-pku"/>
+                        <outletCollection property="cardButtons" destination="dY8-Qd-Ueo" id="6Xn-C1-ITB"/>
+                        <outletCollection property="cardButtons" destination="a3t-Uz-agA" id="Nbf-Qc-SAD"/>
+                        <outletCollection property="cardButtons" destination="IeK-50-U1C" id="Nlf-T0-yIY"/>
+                        <outletCollection property="cardButtons" destination="dWQ-Dh-Bdv" id="FkD-fy-ibE"/>
+                        <outletCollection property="cardButtons" destination="Wnz-l4-2hD" id="7SW-Kc-b6j"/>
+                        <outletCollection property="cardButtons" destination="Sic-Jc-Q4V" id="QjB-Ne-PlR"/>
+                        <outletCollection property="cardButtons" destination="1ya-0z-FDe" id="K67-oZ-jZB"/>
+                        <outletCollection property="cardButtons" destination="faP-p9-2Uj" id="iQt-9G-cPQ"/>
+                        <outletCollection property="cardButtons" destination="eVX-sg-6Hx" id="bCd-nF-tcZ"/>
+                        <outletCollection property="cardButtons" destination="REv-KW-bop" id="xKU-Mt-Tf2"/>
+                        <outletCollection property="cardButtons" destination="uqs-xQ-NHk" id="0vF-da-u16"/>
+                        <outletCollection property="cardButtons" destination="XAb-c0-Ash" id="YB9-M9-gUX"/>
+                        <outletCollection property="cardButtons" destination="qnF-4J-xM6" id="TOD-lm-T6G"/>
+                        <outletCollection property="cardButtons" destination="aIS-cr-7GQ" id="9OP-uf-sDQ"/>
+                        <outletCollection property="cardButtons" destination="84X-4D-pA3" id="Ok7-wM-2wl"/>
+                        <outletCollection property="cardButtons" destination="4Ei-iN-82h" id="raT-iH-vCM"/>
+                        <outletCollection property="cardButtons" destination="hW9-2r-GLg" id="1rE-CO-GaK"/>
+                        <outletCollection property="cardButtons" destination="Waz-kH-0Nx" id="ZsO-TQ-q52"/>
+                        <outletCollection property="cardButtons" destination="xis-EA-MnB" id="atB-vt-MEy"/>
+                        <outletCollection property="cardButtons" destination="Dlp-Ls-1bL" id="Kq4-l9-pfX"/>
+                        <outletCollection property="cardButtons" destination="skD-jz-Hgg" id="caz-rI-Ub2"/>
+                        <outletCollection property="cardButtons" destination="hm9-bi-gNM" id="Epa-OY-XpT"/>
+                        <outletCollection property="cardButtons" destination="g07-6U-YUO" id="FZu-b1-N22"/>
+                        <outletCollection property="cardButtons" destination="q43-Mk-TY9" id="7uZ-zA-V3Z"/>
+                        <outletCollection property="cardButtons" destination="ynL-rK-oy0" id="dkw-NA-AyE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
