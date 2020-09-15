@@ -8,7 +8,8 @@
 
 #import "CardGameViewController.h"
 #import "PlayingCardDeck.h"
-#import "CardMatchingGame.h"
+#import "MessagesViewController.h"
+
 
 @interface CardGameViewController ()
 
@@ -31,9 +32,12 @@
 - (CardMatchingGame *)createGame {
     CardMatchingGame *game = [[CardMatchingGame alloc]
             initWithCardCount:[self.cardButtons count]
-            usingDeck:[[PlayingCardDeck alloc] init]];
-    game.matchAmmount = [self matchAmountFromSelect: self.modeSelect];
+            usingDeck:[self createDeck]];
     return game;
+}
+
+- (Deck *)createDeck {
+    return nil;
 }
 
 - (IBAction)touchCardButton:(UIButton *)sender {
@@ -46,24 +50,57 @@
     for (UIButton *cardButton in self.cardButtons) {
         NSUInteger cardIndex = [self.cardButtons indexOfObject:cardButton];
         Card *card = [self.game cardAtIndex:cardIndex];
-        [cardButton setTitle:[self titleForCard:card]
+        [cardButton setAttributedTitle:[self titleForCard:card]
                     forState:UIControlStateNormal];
-        [cardButton setBackgroundImage:[self backgroundImgaeForCard:card]
+        [cardButton setBackgroundImage:[self backgroundImageForCard:card]
                               forState:UIControlStateNormal];
         cardButton.enabled = !card.matched;
     }
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %ld", (long)self.game.score];
-    self.modeSelect.enabled = self.game.messages.count == 0;
-    self.messageLabel.text = [self.game.messages lastObject];
-    self.messageLabel.alpha = 1.0;
-    self.historySlider.value = self.historySlider.maximumValue = self.game.messages.count - 1;
+    if (self.game.records.count) {
+        self.messageLabel.attributedText = [self textForMessage:[self.game.records lastObject]];
+    } else {
+        self.messageLabel.text = @"Game started";
+    }
 }
 
-- (NSString *)titleForCard:(Card *)card {
-    return card.chosen ? card.contents : @"";
+- (NSAttributedString *)textForCard:(Card *)card {
+    return [[NSAttributedString alloc] initWithString:card.contents];
 }
 
-- (UIImage *)backgroundImgaeForCard:(Card *) card {
+- (NSAttributedString *)titleForCard:(Card *)card {
+    return card.chosen ? [self textForCard:card] : [[NSAttributedString alloc] init];
+}
+
+- (NSAttributedString *)textForMessage:(CardGameRecord *)record {
+    NSMutableAttributedString *text = [[NSMutableAttributedString alloc] init];
+    
+    NSMutableAttributedString *cardText = [[NSMutableAttributedString alloc] init];
+    for (Card* card in record.cards) {
+        if ([cardText string].length > 0) {
+            [cardText appendAttributedString:[[NSAttributedString alloc] initWithString:@" "]];
+        }
+        [cardText appendAttributedString:[self textForCard:card]];
+    }
+    
+    if (record.step == CardGameStepMatch) {
+        [text appendAttributedString:[[NSAttributedString alloc] initWithString:@"Matched "]];
+        [text appendAttributedString:cardText];
+        NSString *message = [NSString stringWithFormat:@" for %lld point%@",
+                                  (long long)record.score, record.score > 1 ? @"s" : @""];
+        [text appendAttributedString:[[NSAttributedString alloc] initWithString:message]];
+    } else if (record.step == CardGameStepMismatch) {
+        [text appendAttributedString:cardText];
+        NSString *message = [NSString stringWithFormat: @" don't match! %lld point penalty!", (long long)-record.score];
+        [text appendAttributedString:[[NSMutableAttributedString alloc] initWithString:message]];
+    } else {
+        [text appendAttributedString:cardText];
+    }
+    
+    return text;
+}
+
+- (UIImage *)backgroundImageForCard:(Card *) card {
     return [UIImage imageNamed:card.chosen ? @"cardfront" : @"cardback"];
 }
 
@@ -72,23 +109,20 @@
     [self updateUI];
 }
 
-- (NSUInteger) matchAmountFromSelect:(UISegmentedControl *)select {
-    return self.modeSelect.selectedSegmentIndex == 1 ? 3 : 2;
-}
 
-- (IBAction)touchModeSelect:(UISegmentedControl *)sender {
-    self.game.matchAmmount = [self matchAmountFromSelect: sender];
-}
-
-- (IBAction)changeHistorySlider:(UISlider *)sender {
-    long sliderValue = lroundf(sender.value);
-    self.messageLabel.text = self.game.messages[sliderValue];
-    self.messageLabel.alpha = sliderValue < self.game.messages.count - 1 ? 0.5 : 1.0;
-}
-
-- (IBAction)touchHistorySlider:(UISlider *)sender {
-    long sliderValue = lroundf(sender.value);
-    [sender setValue:sliderValue animated:YES];
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"ShowHistory"]) {
+        if ([segue.destinationViewController isKindOfClass:[MessagesViewController class]]) {
+            MessagesViewController *viewController = (MessagesViewController *)segue.destinationViewController;
+            NSMutableArray<NSAttributedString *> *messages = [NSMutableArray array];
+            for (CardGameRecord *record in self.game.records) {
+                if (record.step != CardGameStepChangeChosen) {
+                    [messages addObject:[self textForMessage:record]];
+                }
+            }
+            viewController.messages = messages;
+        }
+    }
 }
 
 @end

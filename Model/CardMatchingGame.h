@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "Deck.h"
 #import "Card.h"
+#import "CardGameRecord.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -20,8 +21,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (Card *)cardAtIndex:(NSUInteger)index;
 
 @property (nonatomic, readonly) NSInteger score;
-@property (nonatomic) NSUInteger matchAmmount;
-@property (nonatomic, strong) NSMutableArray *messages;
+@property (nonatomic) NSUInteger matchAmount;
+@property (nonatomic, strong) NSMutableArray<CardGameRecord *> *records;
 
 @end
 

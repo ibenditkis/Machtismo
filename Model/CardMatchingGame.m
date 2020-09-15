@@ -16,27 +16,18 @@
 
 @implementation CardMatchingGame
 
-- (NSMutableArray *)cards {
-    if (!_cards) _cards = [[NSMutableArray alloc] init];
-    return _cards;
-}
-
-- (NSMutableArray *)messages {
-    if (!_messages) _messages = [[NSMutableArray alloc] init];
-    return _messages;
-}
-
-- (void)setMatchAmmount:(NSUInteger)matchAmmount {
-    if (matchAmmount >= 2 && matchAmmount <= 3) {
-        _matchAmmount = matchAmmount;
+- (void)setMatchAmount:(NSUInteger)matchAmount {
+    if (matchAmount >= 2 && matchAmount <= 3) {
+        _matchAmount = matchAmount;
     }
 }
 
 - (instancetype)initWithCardCount:(NSUInteger)count usingDeck:(Deck *)deck {
     self = [super init];
     if (self) {
-        self.matchAmmount = 3;
-        [self.messages addObject:@"Game started"];
+        self.cards = [NSMutableArray array];
+        self.records = [NSMutableArray array];
+        self.matchAmount = 2;
         for (int i = 0; i < count; i++) {
             Card *card = [deck drawRandomCard];
             if (card) {
@@ -66,6 +57,7 @@ NSString *formatCards(NSArray *cards) {
     Card *card = [self cardAtIndex:index];
     
     if (!card.matched) {
+        CardGameRecord *record = [[CardGameRecord alloc] init];
         NSMutableArray *otherCards = [[NSMutableArray alloc] init];
         
         for (Card* otherCard in self.cards) {
@@ -73,39 +65,38 @@ NSString *formatCards(NSArray *cards) {
                 [otherCards addObject:otherCard];
             }
         }
+        
+        [record.cards addObjectsFromArray:otherCards];
 
-        NSString* message = formatCards(otherCards);
         if (card.chosen) {
             card.chosen = NO;
             NSLog(@"close %@", card.contents);
         } else {
-            NSString *cardNames = formatCards([otherCards arrayByAddingObject:card]);
+            [record.cards addObject:card];
             
-            if ([otherCards count] >= self.matchAmmount - 1) {
+            if ([otherCards count] >= self.matchAmount - 1) {
                 int matchScore = [card match:otherCards];
                 int scoreGain = 0;
                 if (matchScore) {
                     scoreGain = matchScore * MATCH_BONUS;
                     for (Card *otherCard in otherCards) otherCard.matched = YES;
                     card.matched = YES;
-                    message = [NSString stringWithFormat: @"Matched %@ for %d point%@",
-                               cardNames, scoreGain, scoreGain > 1 ? @"s" : @""];
+                    record.step = CardGameStepMatch;
                 } else {
                     scoreGain = -MISMATCH_PENALTY;
                     for (Card *otherCard in otherCards) otherCard.chosen = NO;
-                    message = [NSString stringWithFormat: @"%@ don't match! %d point penalty!",
-                               cardNames, -scoreGain];
+                    record.step = CardGameStepMismatch;
                 }
+                record.score = scoreGain;
                 self.score += scoreGain;
                 NSLog(@"match %@ with %@ matchScore=%d", card.contents, formatCards(otherCards), matchScore);
             } else {
-                message = cardNames;
                 NSLog(@"open %@", card.contents);
             }
             card.chosen = YES;
             self.score -= COST_TO_CHOOSE;
         }
-        [self.messages addObject:message];
+        [self.records addObject:record];
     }
 }
 
