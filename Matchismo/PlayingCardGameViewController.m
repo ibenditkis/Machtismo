@@ -7,8 +7,10 @@
 //
 
 #import "PlayingCardGameViewController.h"
-#import "PlayingCardDeck.h"
+
 #import "PlayingCard.h"
+#import "PlayingCardDeck.h"
+#import "PlayingCardView.h"
 
 @interface PlayingCardGameViewController ()
 
@@ -20,20 +22,21 @@
     return [[PlayingCardDeck alloc] init];
 }
 
-- (NSAttributedString *)titleForCard:(Card *)card {
-    if (!card.chosen) {
-        return [[NSAttributedString alloc] initWithString:@""];
+
+- (void)createCardViewsFromGame:(CardMatchingGame *)game {
+    for(NSUInteger cardIndex = 0; cardIndex < game.cardCount; cardIndex++) {
+        PlayingCardView *cardView = [[PlayingCardView alloc] init];
+        PlayingCard *card = (PlayingCard *)[game cardAtIndex:cardIndex];
+        cardView.suit = card.suit;
+        cardView.rank = card.rank;
+        [self.board addSubview:cardView];
     }
-    
-    PlayingCard *playingCard = (PlayingCard *)card;
-    UIColor *color = [UIColor blackColor];
-    if ([playingCard.suit isEqualToString:@"♥︎"] ||
-        [playingCard.suit isEqualToString:@"♦︎"]) {
-        color = [UIColor redColor];
-    }
-    
-    return [[NSAttributedString alloc] initWithString:card.contents
-                                           attributes:@{NSForegroundColorAttributeName: color}];
+}
+
+- (void)updateCardView:(UIView *)cardView fromCard:(Card *)card {
+    [super updateCardView:cardView fromCard:card];
+    PlayingCardView *playingCardView = (PlayingCardView *)cardView;
+    playingCardView.faceUp = card.chosen;
 }
 
 @end

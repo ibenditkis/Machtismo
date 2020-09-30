@@ -10,16 +10,35 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef NS_ENUM(NSUInteger, SetCardColor) {
+    SetCardColorRed,
+    SetCardColorGreen,
+    SetCardColorPurple
+};
+
+typedef NS_ENUM(NSUInteger, SetCardShape) {
+    SetCardShapeDiamond,
+    SetCardShapeSquiggle,
+    SetCardShapeOval
+};
+
+typedef NS_ENUM(NSUInteger, SetCardShading) {
+    SetCardShadingSolid,
+    SetCardShadingStriped,
+    SetCardShadingOpen
+};
+
+
 @interface SetCard : Card
 
-@property (nonatomic, strong) NSArray *features;
+@property (nonatomic, strong) NSArray<NSNumber *> *features;
 
 @property (nonatomic, readonly) NSUInteger shapeCount;
-@property (nonatomic, readonly) NSString *shapeSymbol;
-@property (nonatomic, readonly) NSString *colorName;
-@property (nonatomic, readonly) NSString *shading;
+@property (nonatomic, readonly) SetCardShape shape;
+@property (nonatomic, readonly) SetCardColor color;
+@property (nonatomic, readonly) SetCardShading shading;
 
-+ (NSArray<NSArray *> *)validValues;
++ (NSArray<NSArray<NSNumber *> *> *)validValues;
 
 @end
 

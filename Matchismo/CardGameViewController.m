@@ -8,121 +8,102 @@
 
 #import "CardGameViewController.h"
 #import "PlayingCardDeck.h"
-#import "MessagesViewController.h"
+#import "PlayingCardView.h"
+#import "Grid.h"
+
 
 
 @interface CardGameViewController ()
 
 @property (strong, nonatomic) CardMatchingGame *game;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
-@property (weak, nonatomic) IBOutlet UILabel *messageLabel;
-@property (weak, nonatomic) IBOutlet UISegmentedControl *modeSelect;
-@property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
-@property (weak, nonatomic) IBOutlet UISlider *historySlider;
 
 @end
 
+static const NSUInteger DEFAULT_CARD_COUNT = 12;
+
 @implementation CardGameViewController
 
-- (CardMatchingGame *)game {
-    if (!_game) _game = [self createGame];
-    return _game;
+- (void)viewDidLoad {
+    self.game = [self createGameWithCount: DEFAULT_CARD_COUNT];
 }
 
-- (CardMatchingGame *)createGame {
+- (CardMatchingGame *)createGameWithCount:(NSUInteger)count {
     CardMatchingGame *game = [[CardMatchingGame alloc]
-            initWithCardCount:[self.cardButtons count]
+            initWithCardCount:count
             usingDeck:[self createDeck]];
+    [self createCardViewsFromGame:game];
+    for (UIButton* cardView in self.board.subviews) {
+        [cardView addTarget:self action:@selector(touchCardButton:) forControlEvents:UIControlEventTouchUpInside];
+    }
+
     return game;
+}
+
+- (void)createCardViewsFromGame:(CardMatchingGame *)game {
 }
 
 - (Deck *)createDeck {
     return nil;
 }
 
+- (void)viewDidLayoutSubviews {
+    [self layoutCards];
+}
+
+- (void)layoutCards {
+    Grid *grid = [[Grid alloc] init];
+    [grid setSize:self.board.bounds.size];
+    [grid setCellAspectRatio:2.5 / 3.5];
+    [grid setMinimumNumberOfCells:self.board.subviews.count];
+    
+    int cardIndex = 0;
+    int animationIndex = 0;
+    for (UIView *cardView in self.board.subviews) {
+        NSUInteger row = cardIndex / grid.columnCount;
+        NSUInteger column = cardIndex % grid.columnCount;
+        CGRect frame = CGRectInset([grid frameOfCellAtRow:row inColumn:column], 5, 5);
+        if (!CGRectEqualToRect(cardView.frame, frame)) {
+            cardView.frame = CGRectInset([grid frameOfCellAtRow:grid.rowCount inColumn:1], 5, 5);
+            [UIView animateWithDuration:0.3 delay:0.05 * animationIndex + arc4random_uniform(5) * 0.01
+                                options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveEaseIn
+                             animations:^{
+                cardView.frame = frame;
+                }
+                             completion:nil];
+            animationIndex++;
+        }
+        cardIndex++;
+    }
+}
+
 - (IBAction)touchCardButton:(UIButton *)sender {
-    NSUInteger cardIndex = [self.cardButtons indexOfObject:sender];
+    NSUInteger cardIndex = [self.board.subviews indexOfObject:sender];
     [self.game chooseCardAtIndex:cardIndex];
     [self updateUI];
 }
 
 - (void)updateUI {
-    for (UIButton *cardButton in self.cardButtons) {
-        NSUInteger cardIndex = [self.cardButtons indexOfObject:cardButton];
+    [self layoutCards];
+    for (PlayingCardView *cardView in self.board.subviews) {
+        NSUInteger cardIndex = [self.board.subviews indexOfObject:cardView];
         Card *card = [self.game cardAtIndex:cardIndex];
-        [cardButton setAttributedTitle:[self titleForCard:card]
-                    forState:UIControlStateNormal];
-        [cardButton setBackgroundImage:[self backgroundImageForCard:card]
-                              forState:UIControlStateNormal];
-        cardButton.enabled = !card.matched;
+        [self updateCardView:cardView fromCard:card];
+        cardView.alpha = card.matched ? 0.5 : 1.0;
     }
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %ld", (long)self.game.score];
-    if (self.game.records.count) {
-        self.messageLabel.attributedText = [self textForMessage:[self.game.records lastObject]];
-    } else {
-        self.messageLabel.text = @"Game started";
-    }
 }
 
-- (NSAttributedString *)textForCard:(Card *)card {
-    return [[NSAttributedString alloc] initWithString:card.contents];
-}
-
-- (NSAttributedString *)titleForCard:(Card *)card {
-    return card.chosen ? [self textForCard:card] : [[NSAttributedString alloc] init];
-}
-
-- (NSAttributedString *)textForMessage:(CardGameRecord *)record {
-    NSMutableAttributedString *text = [[NSMutableAttributedString alloc] init];
-    
-    NSMutableAttributedString *cardText = [[NSMutableAttributedString alloc] init];
-    for (Card* card in record.cards) {
-        if ([cardText string].length > 0) {
-            [cardText appendAttributedString:[[NSAttributedString alloc] initWithString:@" "]];
-        }
-        [cardText appendAttributedString:[self textForCard:card]];
-    }
-    
-    if (record.step == CardGameStepMatch) {
-        [text appendAttributedString:[[NSAttributedString alloc] initWithString:@"Matched "]];
-        [text appendAttributedString:cardText];
-        NSString *message = [NSString stringWithFormat:@" for %lld point%@",
-                                  (long long)record.score, record.score > 1 ? @"s" : @""];
-        [text appendAttributedString:[[NSAttributedString alloc] initWithString:message]];
-    } else if (record.step == CardGameStepMismatch) {
-        [text appendAttributedString:cardText];
-        NSString *message = [NSString stringWithFormat: @" don't match! %lld point penalty!", (long long)-record.score];
-        [text appendAttributedString:[[NSMutableAttributedString alloc] initWithString:message]];
-    } else {
-        [text appendAttributedString:cardText];
-    }
-    
-    return text;
-}
-
-- (UIImage *)backgroundImageForCard:(Card *) card {
-    return [UIImage imageNamed:card.chosen ? @"cardfront" : @"cardback"];
+- (void)updateCardView:(UIView *)cardView fromCard:(Card *)card {
+    cardView.alpha = card.matched ? 0.5 : 1.0;
 }
 
 - (IBAction)touchDealButton:(UIButton *)sender {
-    self.game = [self createGame];
-    [self updateUI];
-}
-
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"ShowHistory"]) {
-        if ([segue.destinationViewController isKindOfClass:[MessagesViewController class]]) {
-            MessagesViewController *viewController = (MessagesViewController *)segue.destinationViewController;
-            NSMutableArray<NSAttributedString *> *messages = [NSMutableArray array];
-            for (CardGameRecord *record in self.game.records) {
-                if (record.step != CardGameStepChangeChosen) {
-                    [messages addObject:[self textForMessage:record]];
-                }
-            }
-            viewController.messages = messages;
-        }
+    for (UIView* view in self.board.subviews) {
+        [view removeFromSuperview];
     }
+    self.game = [self createGameWithCount: DEFAULT_CARD_COUNT];
+    [self updateUI];
 }
 
 @end

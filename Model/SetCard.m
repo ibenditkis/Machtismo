@@ -10,35 +10,55 @@
 
 @implementation SetCard
 
-+ (NSArray *)validValues {
-    return @[@[@1, @2, @3],
++ (NSArray<NSArray<NSNumber *> *> *)validValues {
+    return @[@[
+                 @1,
+                 @2,
+                 @3],
+             @[
+                 [NSNumber numberWithUnsignedInteger:SetCardShadingOpen],
+                 [NSNumber numberWithUnsignedInteger:SetCardShadingSolid],
+                 [NSNumber numberWithUnsignedInteger:SetCardShadingStriped]],
+             @[
+                 [NSNumber numberWithUnsignedInteger:SetCardColorRed],
+                 [NSNumber numberWithUnsignedInteger:SetCardColorGreen],
+                 [NSNumber numberWithUnsignedInteger:SetCardColorPurple]],
+             @[
+                 [NSNumber numberWithUnsignedInteger:SetCardShapeDiamond],
+                 [NSNumber numberWithUnsignedInteger:SetCardShapeOval],
+                 [NSNumber numberWithUnsignedInteger:SetCardShapeSquiggle]]
+             ];
+}
+
++ (NSArray<NSArray<NSString *> *> *)validValueStrings {
+    return @[@[@"1", @"2", @"3"],
              @[@"solid", @"stripped", @"open"],
              @[@"red", @"green", @"purple"],
-             @[@"●", @"■", @"▲"]];
+             @[@"diamond", @"oval", @"squiggle"]];
 }
 
 - (NSUInteger)shapeCount {
     return [self.features[0] unsignedIntegerValue];
 }
 
-- (NSString *)shading {
-    return self.features[1];
+- (SetCardShading)shading {
+    return (SetCardShading)self.features[1].unsignedIntegerValue;
 }
 
-- (NSString *)colorName {
-    return self.features[2];
+- (SetCardColor)color {
+    return (SetCardColor)self.features[2].unsignedIntegerValue;
 }
 
-- (NSString *)shapeSymbol {
-    return self.features[3];
+- (SetCardShape)shape {
+    return (SetCardShape)self.features[3].unsignedIntegerValue;
 }
 
 - (NSString *)contents {
     return [NSString stringWithFormat:@"%@-%@-%@-%@",
             self.features[0],
-            self.features[1],
-            self.features[2],
-            self.features[3]];
+            SetCard.validValueStrings[1][self.features[1].unsignedIntegerValue],
+            SetCard.validValueStrings[2][self.features[2].unsignedIntegerValue],
+            SetCard.validValueStrings[3][self.features[3].unsignedIntegerValue]];
 }
 
 - (int)match:(NSArray *)otherCards {
@@ -50,7 +70,6 @@
         for (SetCard* otherCard in otherCards) {
             [values addObject:otherCard.features[i]];
         }
-        NSLog(@"i=%d values=%@", i, values);
         if (values.count > 1) {
             if (values.count < otherCards.count + 1) {
                 matchViolated = YES;

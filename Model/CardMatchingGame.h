@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)chooseCardAtIndex:(NSUInteger)index;
 - (Card *)cardAtIndex:(NSUInteger)index;
 
+@property (nonatomic, readonly) NSUInteger cardCount;
 @property (nonatomic, readonly) NSInteger score;
 @property (nonatomic) NSUInteger matchAmount;
 @property (nonatomic, strong) NSMutableArray<CardGameRecord *> *records;

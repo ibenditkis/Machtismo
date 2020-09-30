@@ -7,8 +7,10 @@
 //
 
 #import "SetCardGameViewController.h"
-#import "SetCardDeck.h"
+
 #import "SetCard.h"
+#import "SetCardDeck.h"
+#import "SetCardView.h"
 
 @interface SetCardGameViewController ()
 
@@ -21,8 +23,8 @@
     [self updateUI];
 }
 
-- (CardMatchingGame *)createGame {
-    CardMatchingGame* game = [super createGame];
+- (CardMatchingGame *)createGameWithCount:(NSUInteger)count {
+    CardMatchingGame* game = [super createGameWithCount:count];
     game.matchAmount = 3;
     return game;
 }
@@ -31,43 +33,50 @@
     return [[SetCardDeck alloc] init];
 }
 
-- (NSAttributedString *)titleForCard:(Card *)card {
-    return [self textForCard:card];
-}
-
-- (NSAttributedString *)textForCard:(Card *)card {
-    SetCard* setCard = (SetCard*)card;
-    NSMutableString *title = [NSMutableString stringWithCapacity:setCard.shapeCount];
-
-    int i;
-    for (i = 0; i < setCard.shapeCount; i++) {
-        [title appendString:setCard.shapeSymbol];
+- (void)createCardViewsFromGame:(CardMatchingGame *)game {
+    for(NSUInteger cardIndex = 0; cardIndex < game.cardCount; cardIndex++) {
+        SetCardView *cardView = [[SetCardView alloc] init];
+        SetCard *card = (SetCard *)[game cardAtIndex:cardIndex];
+        cardView.color = [SetCardGameViewController convertColor:card.color];
+        cardView.count = card.shapeCount;
+        cardView.shape = [SetCardGameViewController convertShape:card.shape];
+        cardView.shading = [SetCardGameViewController convertShading:card.shading];
+        cardView.chosen = card.chosen;
+        [self.board addSubview:cardView];
     }
-    
-    UIColor *color = [SetCardGameViewController colorByName:setCard.colorName];
-    NSMutableDictionary *attributes = [NSMutableDictionary dictionary];
-    attributes[NSForegroundColorAttributeName] = color;
-    attributes[NSStrokeWidthAttributeName] = @-8;
-    attributes[NSStrokeColorAttributeName] = color;
-    if ([setCard.shading isEqualToString:@"open"]) {
-        attributes[NSStrokeWidthAttributeName] = @8;
-    } else if ([setCard.shading isEqualToString:@"stripped"]) {
-        attributes[NSForegroundColorAttributeName] = [color colorWithAlphaComponent:0.2];
+}
+
+- (void)updateCardView:(UIView *)cardView fromCard:(Card *)card {
+    [super updateCardView:cardView fromCard:card];
+    SetCardView *setCardView = (SetCardView *)cardView;
+    setCardView.chosen = card.chosen;
+}
+
++ (SetCardViewColor)convertColor:(SetCardColor)color {
+    switch(color) {
+        case SetCardColorRed: return SetCardViewColorRed;
+        case SetCardColorGreen: return SetCardViewColorGreen;
+        case SetCardColorPurple: return SetCardViewColorPurple;
     }
-    return [[NSAttributedString alloc] initWithString:title
-                                           attributes:attributes];
+    NSAssert(false, @"wrong card color=%lu", (unsigned long)color);
 }
 
-+ (UIColor *)colorByName:(NSString *)name {
-    UIColor *color = [UIColor blackColor];
-    if ([name isEqualToString:@"red"]) color = [UIColor redColor];
-    else if ([name isEqualToString:@"green"]) color = [UIColor colorWithRed:0 green:0.5 blue:0 alpha:1.0];
-    else if ([name isEqualToString:@"purple"]) color = [UIColor purpleColor];
-    return color;
++ (SetCardViewShape)convertShape:(SetCardShape)shape {
+    switch(shape) {
+        case SetCardShapeDiamond: return SetCardViewShapeDiamond;
+        case SetCardShapeOval: return SetCardViewShapeOval;
+        case SetCardShapeSquiggle: return SetCardViewShapeSquiggle;
+    }
+    NSAssert(false, @"wrong card shape=%lu", (unsigned long)shape);
 }
 
-- (UIImage *)backgroundImageForCard:(Card *) card {
-    return [UIImage imageNamed:card.chosen ? @"cardfront.landscape.selected" :  @"cardfront.landscape"];
++ (SetCardViewShading)convertShading:(SetCardShading)shading {
+    switch (shading) {
+        case SetCardShadingOpen: return SetCardViewShadingOpen;
+        case SetCardShadingSolid: return SetCardViewShadingSolid;
+        case SetCardShadingStriped: return SetCardViewShadingStriped;
+    }
+    NSAssert(false, @"wrong card shading=%lu", (unsigned long)shading);
 }
 
 @end

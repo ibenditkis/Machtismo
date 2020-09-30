@@ -5,30 +5,34 @@
    version = "2.0">
    <Breakpoints>
       <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "3E2BBBF4-56BB-4B96-8822-4E395ADA9A4D"
+            uuid = "E8AAC19C-3600-49AC-ADFF-5292B67B294A"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            breakpointStackSelectionBehavior = "1"
-            scope = "1"
-            stopOnStyle = "0">
+            filePath = "Matchismo/VC/CardGameViewController.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "63"
+            endingLineNumber = "63"
+            landmarkName = "-layoutCards"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "A7AD805D-9173-4238-B84C-F1E6330F10A6"
-            shouldBeEnabled = "No"
+            uuid = "A97E63E3-07DC-4A4C-9F0B-D5C09BC79349"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Model/CardMatchingGame.m"
+            filePath = "Matchismo/VC/CardGameViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "69"
-            endingLineNumber = "69"
-            landmarkName = "-chooseCardAtIndex:"
+            startingLineNumber = "68"
+            endingLineNumber = "68"
+            landmarkName = "-layoutCards"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

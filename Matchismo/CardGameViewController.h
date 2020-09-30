@@ -11,8 +11,12 @@
 
 @interface CardGameViewController : UIViewController
 
-- (CardMatchingGame* )createGame;
+@property (weak, nonatomic) IBOutlet UIView *board;
+
+- (CardMatchingGame *)createGameWithCount:(NSUInteger)count;
+- (void)createCardViewsFromGame:(CardMatchingGame *)game;
 - (void)updateUI;
+- (void)updateCardView:(UIView *)cardView fromCard:(Card *)card;
 
 @end
 

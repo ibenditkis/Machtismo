@@ -16,6 +16,10 @@
 
 @implementation CardMatchingGame
 
+- (NSUInteger)cardCount {
+    return self.cards.count;
+}
+
 - (void)setMatchAmount:(NSUInteger)matchAmount {
     if (matchAmount >= 2 && matchAmount <= 3) {
         _matchAmount = matchAmount;
@@ -70,7 +74,6 @@ NSString *formatCards(NSArray *cards) {
 
         if (card.chosen) {
             card.chosen = NO;
-            NSLog(@"close %@", card.contents);
         } else {
             [record.cards addObject:card];
             
@@ -90,8 +93,6 @@ NSString *formatCards(NSArray *cards) {
                 record.score = scoreGain;
                 self.score += scoreGain;
                 NSLog(@"match %@ with %@ matchScore=%d", card.contents, formatCards(otherCards), matchScore);
-            } else {
-                NSLog(@"open %@", card.contents);
             }
             card.chosen = YES;
             self.score -= COST_TO_CHOOSE;
