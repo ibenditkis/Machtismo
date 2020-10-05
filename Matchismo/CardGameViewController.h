@@ -13,10 +13,11 @@
 
 @property (weak, nonatomic) IBOutlet UIView *board;
 
+- (CardMatchingGame *)createGame;
 - (CardMatchingGame *)createGameWithCount:(NSUInteger)count;
-- (void)createCardViewsFromGame:(CardMatchingGame *)game;
+- (UIButton *)createCardViewForCard:(Card *)card;
 - (void)updateUI;
-- (void)updateCardView:(UIView *)cardView fromCard:(Card *)card;
+- (void)updateCardAppearance:(UIButton *)cardView fromCard:(Card *)card;
 
 @end
 

@@ -64,7 +64,7 @@ static const CGFloat SQUIGGLE_ADJ_Y = 0.8;
 - (void)setChosen:(BOOL)chosen {
     if (_chosen == chosen) return;
     _chosen = chosen;
-    CGFloat scale = self.chosen ? 2 : 1;
+    CGFloat scale = self.chosen ? 1.1 : 1;
     self.transform = CGAffineTransformMakeScale(scale, scale);
     [self setNeedsDisplay];
 }

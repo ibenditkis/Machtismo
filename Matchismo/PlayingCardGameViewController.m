@@ -22,20 +22,18 @@
     return [[PlayingCardDeck alloc] init];
 }
 
-
-- (void)createCardViewsFromGame:(CardMatchingGame *)game {
-    for(NSUInteger cardIndex = 0; cardIndex < game.cardCount; cardIndex++) {
-        PlayingCardView *cardView = [[PlayingCardView alloc] init];
-        PlayingCard *card = (PlayingCard *)[game cardAtIndex:cardIndex];
-        cardView.suit = card.suit;
-        cardView.rank = card.rank;
-        [self.board addSubview:cardView];
-    }
+- (UIButton *)createCardViewForCard:(Card *)card {
+    PlayingCardView *cardView = [[PlayingCardView alloc] init];
+    PlayingCard *playingCard = (PlayingCard *)card;
+    cardView.suit = playingCard.suit;
+    cardView.rank = playingCard.rank;
+    return cardView;
 }
 
-- (void)updateCardView:(UIView *)cardView fromCard:(Card *)card {
-    [super updateCardView:cardView fromCard:card];
+- (void)updateCardAppearance:(UIButton *)cardView fromCard:(Card *)card {
+    [super updateCardAppearance:cardView fromCard:card];
     PlayingCardView *playingCardView = (PlayingCardView *)cardView;
+    playingCardView.alpha = card.matched ? 0.5 : 1.0;
     playingCardView.faceUp = card.chosen;
 }
 

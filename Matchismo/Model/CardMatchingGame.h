@@ -24,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) NSInteger score;
 @property (nonatomic) NSUInteger matchAmount;
 @property (nonatomic, strong) NSMutableArray<CardGameRecord *> *records;
+@property (nonatomic) BOOL matchedAreRemoved;
 
 @end
 

@@ -47,6 +47,17 @@
                                     <action selector="touchDealButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="86p-AU-z9n"/>
                                 </connections>
                             </button>
+                            <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3HN-EV-utf">
+                                <rect key="frame" x="68" y="762" width="20" height="20"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <accessibilityTraits key="traits" notEnabled="YES"/>
+                                </accessibility>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="sH7-Xb-zDk"/>
+                                    <constraint firstAttribute="width" constant="20" id="xc3-lt-pO1"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -55,6 +66,8 @@
                             <constraint firstItem="02v-9h-AR1" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="7YT-fY-S0J"/>
                             <constraint firstItem="gba-RB-xgW" firstAttribute="top" secondItem="d2D-iR-4hq" secondAttribute="bottom" constant="8" id="8Rl-J8-sxF"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="d2D-iR-4hq" secondAttribute="trailing" constant="20" id="HGh-xb-GUH"/>
+                            <constraint firstItem="3HN-EV-utf" firstAttribute="centerY" secondItem="02v-9h-AR1" secondAttribute="centerY" id="OqW-48-Bk0"/>
+                            <constraint firstItem="02v-9h-AR1" firstAttribute="leading" secondItem="3HN-EV-utf" secondAttribute="trailing" constant="39" id="PXd-ON-PP3"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="02v-9h-AR1" secondAttribute="bottom" constant="17" id="SDp-aN-QMb"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="gba-RB-xgW" secondAttribute="trailing" constant="20" id="YdU-zY-4UO"/>
                             <constraint firstItem="gba-RB-xgW" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="d52-Ri-6JZ"/>
@@ -68,6 +81,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="board" destination="gba-RB-xgW" id="6WC-Vy-jSR"/>
+                        <outlet property="deck" destination="3HN-EV-utf" id="CJm-7v-s6o"/>
                         <outlet property="scoreLabel" destination="d2D-iR-4hq" id="CZ9-7g-2p2"/>
                     </connections>
                 </viewController>
@@ -105,6 +119,10 @@
                             <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LNb-L4-llx">
                                 <rect key="frame" x="20" y="44" width="374" height="738"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="Xfy-b1-AOr" appends="YES" id="haf-de-du2"/>
+                                </connections>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -121,6 +139,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mhj-2C-bTt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <pinchGestureRecognizer id="Xfy-b1-AOr">
+                    <connections>
+                        <action selector="pinch:" destination="ig2-Xg-ANB" id="oww-gi-6T3"/>
+                    </connections>
+                </pinchGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="88.405797101449281" y="1009.8214285714286"/>
         </scene>
@@ -164,10 +187,23 @@
                                     <action selector="touchDealButton:" destination="J1E-Kq-xIE" eventType="touchUpInside" id="kwk-cJ-TfW"/>
                                 </connections>
                             </button>
+                            <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dTL-2K-xeE">
+                                <rect key="frame" x="67" y="762" width="20" height="20"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <accessibilityTraits key="traits" notEnabled="YES"/>
+                                </accessibility>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="20" id="Hhd-DS-ReA"/>
+                                    <constraint firstAttribute="height" constant="20" id="JKU-Mj-kWF"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="dTL-2K-xeE" firstAttribute="centerY" secondItem="g94-8Y-XvZ" secondAttribute="centerY" id="8Nc-R2-sMd"/>
                             <constraint firstItem="gR1-0v-hvJ" firstAttribute="bottom" secondItem="g94-8Y-XvZ" secondAttribute="bottom" constant="17" id="HiZ-d2-Iyc"/>
+                            <constraint firstItem="g94-8Y-XvZ" firstAttribute="leading" secondItem="dTL-2K-xeE" secondAttribute="trailing" constant="40" id="Odn-u5-7ax"/>
                             <constraint firstItem="g94-8Y-XvZ" firstAttribute="centerX" secondItem="gR1-0v-hvJ" secondAttribute="centerX" id="bec-Ha-GTR"/>
                             <constraint firstItem="AzL-gg-d1o" firstAttribute="leading" secondItem="gR1-0v-hvJ" secondAttribute="leading" constant="20" id="cN1-H1-871"/>
                             <constraint firstItem="gR1-0v-hvJ" firstAttribute="trailing" secondItem="dYS-US-cww" secondAttribute="trailing" constant="20" id="eO5-3b-1ba"/>
@@ -185,6 +221,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="board" destination="dYS-US-cww" id="QRj-eX-SLN"/>
+                        <outlet property="deck" destination="dTL-2K-xeE" id="Of2-KR-BIE"/>
                         <outlet property="scoreLabel" destination="AzL-gg-d1o" id="JpL-p8-QZb"/>
                     </connections>
                 </viewController>

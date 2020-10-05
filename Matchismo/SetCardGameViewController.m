@@ -33,23 +33,21 @@
     return [[SetCardDeck alloc] init];
 }
 
-- (void)createCardViewsFromGame:(CardMatchingGame *)game {
-    for(NSUInteger cardIndex = 0; cardIndex < game.cardCount; cardIndex++) {
-        SetCardView *cardView = [[SetCardView alloc] init];
-        SetCard *card = (SetCard *)[game cardAtIndex:cardIndex];
-        cardView.color = [SetCardGameViewController convertColor:card.color];
-        cardView.count = card.shapeCount;
-        cardView.shape = [SetCardGameViewController convertShape:card.shape];
-        cardView.shading = [SetCardGameViewController convertShading:card.shading];
-        cardView.chosen = card.chosen;
-        [self.board addSubview:cardView];
-    }
+- (UIButton *)createCardViewForCard:(Card *)card {
+    SetCardView *cardView = [[SetCardView alloc] init];
+    SetCard *setCard = (SetCard *)card;
+    cardView.color = [SetCardGameViewController convertColor:setCard.color];
+    cardView.count = setCard.shapeCount;
+    cardView.shape = [SetCardGameViewController convertShape:setCard.shape];
+    cardView.shading = [SetCardGameViewController convertShading:setCard.shading];
+    cardView.chosen = setCard.chosen;
+    return cardView;
 }
 
-- (void)updateCardView:(UIView *)cardView fromCard:(Card *)card {
-    [super updateCardView:cardView fromCard:card];
+- (void)updateCardAppearance:(UIButton *)cardView fromCard:(Card *)card {
+    [super updateCardAppearance:cardView fromCard:card];
     SetCardView *setCardView = (SetCardView *)cardView;
-    setCardView.chosen = card.chosen;
+    setCardView.chosen = card.chosen && !card.matched;
 }
 
 + (SetCardViewColor)convertColor:(SetCardColor)color {
